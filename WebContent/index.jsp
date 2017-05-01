@@ -8,6 +8,6 @@
 <title>index</title>
 </head>
 <body>
-<a href=custuserlist.jsp>고객 목록 보기 </a>
+<a href='custcontrol.jsp?command=list'>고객 목록 보기 </a>
 </body>
 </html>

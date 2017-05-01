@@ -14,19 +14,18 @@
 </head>
 <body>
 <%
-String pid[] = request.getParameterValues("delck");
-if(pid == null || pid.length == 0){
-	throw new SQLException("삭제를 하기 위해서는 한 개 이상을 선택하십시요");
-}
+boolean ret = false;
+Object oRet = request.getAttribute("ret");
 
-CustUserManager dao = new CustUserManager();
-boolean ret = dao.muldelCustUser(pid);
+if(oRet != null){
+	ret = (Boolean) oRet;
+}
 
 if(ret){
 %>
 <script type= "text/javascript">
 alert('고객 삭제에 성공했습니다.');
-location.href='custuserlist.jsp';
+location.href='custcontrol.jsp?command=list';
 </script>
 <%
 }
@@ -34,7 +33,7 @@ else {
 %>
 <script type= "text/javascript">
 alert('고객 삭제를 실패했습니다.');
-location.href='custuserlist.jsp';
+location.href='custcontrol.jsp?command=list';
 </script>
 <%
 }

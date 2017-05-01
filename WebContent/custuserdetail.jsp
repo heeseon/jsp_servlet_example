@@ -16,14 +16,13 @@
 </head>
 <body>
 <%
-String pid = request.getParameter("id");
-if(pid == null || pid.trim().equals("")){
-	response.sendRedirect("custuserlist.jsp");
+CustUserDto dto = new CustUserDto();
+
+Object oDto = request.getAttribute("cust");
+
+if(oDto != null){
+	dto = (CustUserDto)oDto;
 }
-
-CustUserManager dao = new CustUserManager();
-CustUserDto dto = dao.getCustUser(pid);
-
 %>
 <center>
 <table border = "1">
@@ -48,18 +47,23 @@ String address= dto.getAddress();
 </tr>
 <tr align = "center" bgcolor='#ddaabb'>
 <td colspan="2">
-<form action="custdel.jsp" method='post'>
+
+<form action="custcontrol.jsp" method='post'>
+<input type="hidden" name="command" value="delete"/>
 <input type="hidden" name="id" value="<%=id%>"/>
 <input type="submit" value="고객 삭제" />
 </form>
-<form action="custuserupdate.jsp" method='post'>
+
+<form action="custcontrol.jsp" method='post'>
+<input type="hidden" name="command" value="bfupdate"/>
 <input type="hidden" name="id" value="<%=id%>"/>
 <input type="submit" value="고객 정보 변경" />
 </form>
- </td>
+
+</td>
 </tr>
 </table>
-<a href = custuserlist.jsp>모든 고객 목록 보기</a>
+<a href='custcontrol.jsp?command=list'>모든 고객 목록 보기</a>
 </center>
 </body>
 </html>

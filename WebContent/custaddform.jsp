@@ -9,7 +9,8 @@
 </head>
 <body>
 <center>
-<form action="custadd.jsp" method="post">
+<form action="custcontrol.jsp" method="post">
+<input type="hidden" name="command" value="add"/>
 <table border = "1">
 <col width = 200/><col width = 500/>
 <tr bgcolor='#ddaabb'>
@@ -29,6 +30,7 @@
 </tr>
 </table>
 </form>
+<a href='custcontrol.jsp?command=list'>고객 목록 보기 </a>
 </center>
 </body>
 </html>

@@ -15,17 +15,20 @@
 </head>
 <body>
 <%
-String pid = request.getParameter("id");
-String pname = request.getParameter("name");
-String paddress = request.getParameter("address");
-CustUserManager dao = new CustUserManager();
-CustUserDto dto = new CustUserDto(pid, pname, paddress);
-boolean ret = dao.updateCustUser(dto);
+
+boolean ret = false;
+Object oRet = request.getAttribute("ret");
+
+if(oRet != null){
+	ret = (Boolean) oRet;
+}
+
 if(ret){
+	Object pid = (String) request.getAttribute("pid");
 %>
 <script type= "text/javascript">
 alert('고객 정보 변경에 성공했습니다.');
-location.href='custuserdetail.jsp?id=<%=pid%>';
+location.href='custcontrol.jsp?command=detail&id=<%=pid%>';
 </script>
 <%
 }
@@ -33,7 +36,7 @@ else {
 %>
 <script type= "text/javascript">
 alert('고객 정보 변경에 실패했습니다.');
-location.href='custuserlist.jsp';
+location.href='custcontrol.jsp?command=list';
 </script>
 <%
 }

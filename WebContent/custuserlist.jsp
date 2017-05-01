@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="org.olc.dto.CustUserDto"%>
 <%@page import="org.olc.dao.CustUserManager"%>
@@ -25,11 +26,15 @@ function deletechecks(e){
 </head>
 <body>
 <%
-CustUserManager dao = new CustUserManager();
-List<CustUserDto> lists = dao.getCustLists();
+List<CustUserDto> lists = new ArrayList<CustUserDto>();
+Object oLists = request.getAttribute("custs");
+if(oLists != null){
+	lists = (List<CustUserDto>)oLists;
+}
 %>
 <center>
-<form action="custmuldel.jsp" method="post">
+<form action="custcontrol.jsp" method="post">
+<input type='hidden' name="command" value="muldel" />
 <table border = "1">
 <col width = "100"/><col width = "200"/><col width = "400"/>
 <tr align = "center" bgcolor='#ddaabb'>
@@ -48,18 +53,18 @@ for(CustUserDto dto : lists){
 %>
 <td><input type='checkbox' name='delck' value='<%=dto.getId()%>' /></td>
 <td><%=dto.getId()%></td>
-<td><a href='custuserdetail.jsp?id=<%=dto.getId()%>'><%=dto.getName()%></a></td>
+<td><a href='custcontrol.jsp?command=detail&id=<%=dto.getId()%>'><%=dto.getName()%></a></td>
 </tr>
 <%
 }
 %>
 <tr bgcolor='#ddaabb'>
-<td colspan="3"> <input type="submit" value="¿©·¯ °í°´ »èÁ¦" />
+<td colspan="3" align="center"> <input type="submit" value="¿©·¯ °í°´ »èÁ¦" />
 </td>
 </tr>
 </table>
 </form>
-<a href=custaddform.jsp>°í°´ Ãß°¡</a><br>
+<a href='custcontrol.jsp?command=bfadd'>°í°´ Ãß°¡</a><br>
 <a href=index.jsp>HOME</a>
 </center>
 </body>

@@ -16,20 +16,18 @@
 <body>
 <%
 
-String pid = request.getParameter("id");
-String pname = request.getParameter("name");
-String paddress = request.getParameter("address");
+boolean ret = false;
+Object oRet = request.getAttribute("ret");
 
-CustUserManager dao = new CustUserManager();
-CustUserDto dto = new CustUserDto(pid, pname, paddress);
-
-boolean ret = dao.addCustUser(dto);
+if(oRet != null){
+	ret = (Boolean) oRet;
+}
 
 if(ret){
 	%>
 <script type= "text/javascript">
 alert('고객 추가에 성공했습니다.');
-location.href='custuserlist.jsp';
+location.href='custcontrol.jsp?command=list';
 </script>
 <%
 }
@@ -37,7 +35,7 @@ else {
 %>
 <script type= "text/javascript">
 alert('고객 추가에 실패했습니다.');
-location.href='custaddform.jsp';
+location.href='custcontrol.jsp?command=bfadd';
 </script>
 <%
 }
