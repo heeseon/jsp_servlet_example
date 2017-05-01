@@ -15,14 +15,16 @@
 <title>custuserdetail</title>
 </head>
 <body>
+<jsp:useBean id="custb" class="org.olc.dto.CustUserDto"/>
+<jsp:setProperty property="id" name="custb"/>
+<jsp:useBean id="dao" class="org.olc.dao.CustUserManager"></jsp:useBean>
 <%
-String pid = request.getParameter("id");
-if(pid == null || pid.trim().equals("")){
+
+if(custb.getId() == null || custb.getId().trim().equals("")){
 	response.sendRedirect("custuserlist.jsp");
 }
 
-CustUserManager dao = new CustUserManager();
-CustUserDto dto = dao.getCustUser(pid);
+CustUserDto dto = dao.getCustUser(custb.getId());
 
 %>
 <center>

@@ -24,8 +24,8 @@ function deletechecks(e){
 </script>
 </head>
 <body>
+<jsp:useBean id="dao" class="org.olc.dao.CustUserManager"/>
 <%
-CustUserManager dao = new CustUserManager();
 List<CustUserDto> lists = dao.getCustLists();
 %>
 <center>
@@ -46,7 +46,7 @@ for(CustUserDto dto : lists){
 <%
 
 %>
-<td><input type='checkbox' name='delck' value='<%=dto.getId()%>' /></td>
+<td align="center"><input type='checkbox' name='delck' value='<%=dto.getId()%>' /></td>
 <td><%=dto.getId()%></td>
 <td><a href='custuserdetail.jsp?id=<%=dto.getId()%>'><%=dto.getName()%></a></td>
 </tr>
@@ -54,7 +54,7 @@ for(CustUserDto dto : lists){
 }
 %>
 <tr bgcolor='#ddaabb'>
-<td colspan="3"> <input type="submit" value="여러 고객 삭제" />
+<td colspan="3" align="center"> <input type="submit" value="여러 고객 삭제" />
 </td>
 </tr>
 </table>

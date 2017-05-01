@@ -13,12 +13,11 @@
 <title>custdel</title>
 </head>
 <body>
+<jsp:useBean id="dto" class="org.olc.dto.CustUserDto"/>
+<jsp:setProperty property="id" name="dto"/>
+<jsp:useBean id="dao" class="org.olc.dao.CustUserManager"/>
 <%
-
-String pid = request.getParameter("id");
-
-CustUserManager dao = new CustUserManager();
-boolean ret = dao.deleteCustUser(pid);
+boolean ret = dao.deleteCustUser(dto.getId());
 
 if(ret){
 %>
@@ -32,7 +31,7 @@ else {
 %>
 <script type= "text/javascript">
 alert('고객 삭제를 실패했습니다.');
-location.href='custuserdetail.jsp?id=<%=pid%>';
+location.href='custuserdetail.jsp?id=<jsp:getProperty property="id" name="dto"/>';
 </script>
 <%
 }

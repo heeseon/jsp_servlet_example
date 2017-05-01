@@ -14,14 +14,13 @@
 <title>custadd</title>
 </head>
 <body>
+<jsp:useBean id="dto" class ="org.olc.dto.CustUserDto"/>
+<jsp:setProperty property="id" name="dto"/>
+<jsp:setProperty property="name" name="dto"/>
+<jsp:setProperty property="address" name="dto"/>
+<jsp:useBean id="dao" class="org.olc.dao.CustUserManager"/>
 <%
 
-String pid = request.getParameter("id");
-String pname = request.getParameter("name");
-String paddress = request.getParameter("address");
-
-CustUserManager dao = new CustUserManager();
-CustUserDto dto = new CustUserDto(pid, pname, paddress);
 
 boolean ret = dao.addCustUser(dto);
 

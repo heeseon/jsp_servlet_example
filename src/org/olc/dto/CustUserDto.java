@@ -14,6 +14,7 @@ public class CustUserDto implements Serializable{
 	private String id;
 	private String name;
 	private String address;
+	private String[] delck;
 
 	public CustUserDto() {
 
@@ -46,6 +47,14 @@ public class CustUserDto implements Serializable{
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String[] getDelck() {
+		return delck;
+	}
+
+	public void setDelck(String[] delck) {
+		this.delck = delck;
 	}
 	
 	
