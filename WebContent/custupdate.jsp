@@ -14,18 +14,18 @@
 <title>custupdate</title>
 </head>
 <body>
-<jsp:useBean id="dao" class="org.olc.dao.CustUserManager"/>
-<jsp:useBean id="dto" class="org.olc.dto.CustUserDto"/>
-<jsp:setProperty property="id" name="dto"/>
-<jsp:setProperty property="name" name="dto"/>
-<jsp:setProperty property="address" name="dto"/>
 <%
+String pid = request.getParameter("id");
+String pname = request.getParameter("name");
+String paddress = request.getParameter("address");
+CustUserManager dao = new CustUserManager();
+CustUserDto dto = new CustUserDto(pid, pname, paddress);
 boolean ret = dao.updateCustUser(dto);
 if(ret){
 %>
 <script type= "text/javascript">
 alert('고객 정보 변경에 성공했습니다.');
-location.href='custuserdetail.jsp?id=<jsp:getProperty property="id" name="dto"/>';
+location.href='custuserdetail.jsp?id=<%=pid%>';
 </script>
 <%
 }

@@ -15,19 +15,16 @@
 <title>custuserudpate</title>
 </head>
 <body>
-<jsp:useBean id="dto" class="org.olc.dto.CustUserDto"/>
-<jsp:setProperty property="id" name="dto"/>
-<jsp:useBean id="dao" class="org.olc.dao.CustUserManager"/>
 <%
-
-if(dto.getId() == null || dto.getId().trim().equals("")){
+String pid = request.getParameter("id");
+if(pid == null || pid.trim().equals("")){
 response.sendRedirect("custuserlist.jsp");
 }
-
-CustUserDto dto2 = dao.getCustUser(dto.getId());
-String id = dto2.getId();
-String name = dto2.getName();
-String address = dto2.getAddress();
+CustUserManager dao = new CustUserManager();
+CustUserDto dto = dao.getCustUser(pid);
+String id = dto.getId();
+String name = dto.getName();
+String address = dto.getAddress();
 %>
 <center>
 <form action="custupdate.jsp" method='post'>
