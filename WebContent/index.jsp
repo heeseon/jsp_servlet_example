@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=euc-kr"%>
-<% request.setCharacterEncoding("euc-kr"); %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:requestEncoding value="euc-kr"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +9,9 @@
 <title>home</title>
 </head>
 <body>
-<a href='custcontrol.jsp?command=list'>고객 목록 보기 </a>
+<c:url var='custlist' value='custcontrol.jsp'>
+<c:param name="command" value="list"></c:param>
+</c:url>
+<a href='${custlist}'>고객 목록 보기</a><br>
 </body>
 </html>

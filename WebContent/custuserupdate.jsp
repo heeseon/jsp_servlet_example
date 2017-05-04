@@ -1,7 +1,7 @@
-<%@page import="org.olc.dto.CustUserDto"%>
-<%@page import="org.olc.dao.CustUserManager"%>
 <%@ page contentType="text/html; charset=euc-kr"%>
-<% request.setCharacterEncoding("euc-kr"); %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:requestEncoding value="euc-kr"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,20 +9,8 @@
 <title>custuserupdate</title>
 </head>
 <body>
-<%
-
-CustUserDto dto = new CustUserDto();
-
-Object oDto = request.getAttribute("cust");
-
-if(oDto != null){
-	dto = (CustUserDto)oDto;
-}
-String id = dto.getId();
-String name = dto.getName();
-String address = dto.getAddress();
-
-%>
+<c:set var='cust' value='${requestScope.cust}'/>
+<c:if test="${not empty cust}">
 <center>
 <form action="custcontrol.jsp" method='post'>
 <input type="hidden" name="command" value="update"/>
@@ -31,17 +19,17 @@ String address = dto.getAddress();
 <tr align = "center" bgcolor='#ddaabb'>
 <tr  bgcolor='#ddaabb'>
 <td>아이디</td>
-<td><input type="text" name="id" size="20" value="<%=id%>" readonly="readonly"/>
+<td><input type="text" name="id" size="20" value="${cust.id}" readonly="readonly"/>
 </td>
 </tr>
 <tr bgcolor='#ddaabb'>
 <td>이 름</td>
-<td><input type="text" name="name" size="20" value="<%=name%>"/>
+<td><input type="text" name="name" size="20" value="${cust.name}"/>
 </td>
 </tr>
 <tr  bgcolor='#ddaabb'>
 <td>주 소</td>
-<td><input type="text" name="address" size="50" value="<%=address%>" />
+<td><input type="text" name="address" size="50" value="${cust.address}" />
 </td>
 </tr>
 <tr align = "center" bgcolor='#ddaabb'>
@@ -51,7 +39,12 @@ String address = dto.getAddress();
 </tr>
 </table>
 </form>
-<a href='custcontrol.jsp?command=list'>모든 고객 목록 보기</a>
+<c:url var='custlist' value='custcontrol.jsp'>
+<c:param name="command" value="list"></c:param>
+</c:url>
+<a href='${custlist}'>모든 고객 목록 보기</a>
 </center>
+</c:if>
+
 </body>
 </html>

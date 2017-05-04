@@ -1,15 +1,13 @@
-<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=euc-kr"%>
-<% request.setCharacterEncoding("euc-kr"); %>
-<%@page import="org.olc.dto.CustUserDto"%>
-<%@page import="java.util.List"%>
-<%@page import="org.olc.dao.CustUserManager"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:requestEncoding value="euc-kr"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>index</title>
+<title>custuserlist</title>
 <script type="text/javascript">
 function deletechecks(e){
 	var x = document.getElementsByName("delck");
@@ -20,13 +18,6 @@ function deletechecks(e){
 </script>
 </head>
 <body>
-<%
-List<CustUserDto> lists = new ArrayList<CustUserDto>();
-Object oLists = request.getAttribute("custs");
-if(oLists != null){
-	lists = (List<CustUserDto>)oLists;
-}
-%>
 <center>
 <form action="custcontrol.jsp" method="post">
 <input type='hidden' name="command" value="muldel" />
@@ -37,30 +28,51 @@ if(oLists != null){
 <td>아이디</td>
 <td>이  름</td>
 </tr>
-	
-<%
-int rows = 1;
-for(CustUserDto dto : lists){
-%>
-<tr <%= (rows++ %2)==1?"bgcolor='#aabbcc'": "bgcolor='#05aabb'"%>>
-<%
 
-%>
-<td><input type='checkbox' name='delck' value='<%=dto.getId()%>' /></td>
-<td><%=dto.getId()%></td>
-<td><a href='custcontrol.jsp?command=detail&id=<%=dto.getId()%>'><%=dto.getName()%></a></td>
+<c:set var='custlists' value='${requestScope.custs}'/>
+<c:if test="${empty custlists}">
+
+<tr bgcolor='#f6f6d6'>
+	<td colspan='3' align = 'center'> 고객 리스트가 존재하지 않습니다.</td>
 </tr>
-<%
-}
-%>
+
+</c:if>
+
+<c:forEach var='cust' items='${custlists}' varStatus="status">
+	<c:choose>
+		<c:when test="${status.count%2==0}">
+			<c:set var="bgcol" value="#f6f6d6"/>
+		</c:when>
+		<c:otherwise>
+			<c:set var="bgcol" value="#f4f4a4"/>
+		</c:otherwise>
+	</c:choose>	
+<tr bgcolor='${bgcol}'>
+<td><input type='checkbox' name='delck' value='${cust.id}' /></td>
+<td>${cust.id}</td>
+
+<c:url var='custdetail' value='custcontrol.jsp'>
+<c:param name="command" value="detail"></c:param>
+<c:param name="id" value='${cust.id}'></c:param>
+</c:url>
+
+<td><a href='${custdetail}'>${cust.name}</a></td>
+</tr>
+</c:forEach>	
 <tr bgcolor='#ddaabb'>
 <td colspan="3" align="center"> <input type="submit" value="여러 고객 삭제" />
 </td>
 </tr>
 </table>
 </form>
-<a href='custcontrol.jsp?command=bfadd'>고객 추가</a><br>
-<a href=index.jsp>HOME</a>
+
+<c:url var='custadd' value='custcontrol.jsp'>
+<c:param name="command" value="bfadd"></c:param>
+</c:url>
+<a href='${custadd}'>고객 추가</a><br>
+
+<c:url var='home' value='index.jsp'></c:url>
+<a href='${home}'>HOME</a>
 </center>
 </body>
 </html>
